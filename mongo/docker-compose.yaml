@@ -1,0 +1,123 @@
+version: '3.4'
+x-logging:
+  &default-logging
+  options:
+    max-size: '12m'
+    max-file: '5'
+  driver: json-file
+  
+services:
+  cfg_1:
+    image: mongo:4.0.10
+    command: mongod -f /etc/mongodb/mongod.conf
+    volumes: 
+      - /usr/local/mongo/configsvr/conf:/etc/mongodb
+      - /usr/local/mongo/configsvr/db:/data/db
+    
+    ports:
+      - "27019:27019"
+    
+    networks:
+      - mongodbnet
+    
+    restart:
+      always
+    
+    container_name:
+      cfg_1
+    
+    ulimits:
+      nofile:
+        soft: 300000
+        hard: 300000
+        
+  shard1_1:
+    image: mongo:4.0.10
+    command: mongod -f /etc/mongodb/mongod.conf
+    volumes: 
+      - /usr/local/mongo/shard1/conf:/etc/mongodb
+      - /usr/local/mongo/shard1/db:/data/db
+    
+    ports:
+      - "27018:27018"
+      
+    
+    restart:
+      always
+    
+    container_name:
+      shard1_1
+    
+    ulimits:
+      nofile:
+        soft: 300000
+        hard: 300000
+        
+  shard2_1:
+    image: mongo:4.0.10
+    command: mongod -f /etc/mongodb/mongod.conf
+    volumes: 
+      - /usr/local/mongo/shard2/conf:/etc/mongodb
+      - /usr/local/mongo/shard2/db:/data/db
+    
+    ports:
+      - "27028:27018"
+      
+    
+    restart:
+      always
+    
+    container_name:
+      shard2_1
+    
+    ulimits:
+      nofile:
+        soft: 300000
+        hard: 300000
+        
+  shard3_1:
+    image: mongo:4.0.10
+    command: mongod -f /etc/mongodb/mongod.conf
+    volumes: 
+      - /usr/local/mongo/shard3/conf:/etc/mongodb
+      - /usr/local/mongo/shard3/db:/data/db
+    
+    ports:
+      - "27038:27018"
+      
+    restart:
+      always
+    
+    container_name:
+      shard3_1
+    
+    ulimits:
+      nofile:
+        soft: 300000
+        hard: 300000
+        
+   mongos_1:
+    image: mongo:4.0.10
+    command: mongos -f /etc/mongodb/mongos.conf
+    volumes: 
+      - /usr/local/mongo/mongos/conf:/etc/mongodb
+      - /usr/local/mongo/mongos/db:/data/db
+    
+    ports:
+      - "27020:27020"
+      
+    restart:
+      always
+    
+    container_name:
+      mongos_1
+    
+    ulimits:
+      nofile:
+        soft: 300000
+        hard: 300000
+        
+# Swarm 跨主机网络网络
+networks:
+  mongodbs:
+    external: true
