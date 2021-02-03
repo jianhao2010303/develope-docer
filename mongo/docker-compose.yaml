@@ -113,6 +113,7 @@ services:
     
     ports:
       - "27020:27020"
+      - "27017:27017"
     
     networks:
       - mongodbnet
