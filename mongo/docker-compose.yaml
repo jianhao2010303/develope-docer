@@ -40,7 +40,9 @@ services:
     
     ports:
       - "27018:27018"
-      
+    
+    networks:
+      - mongodbnet
     
     restart:
       always
@@ -63,6 +65,8 @@ services:
     ports:
       - "27028:27018"
       
+    networks:
+      - mongodbnet
     
     restart:
       always
@@ -85,6 +89,10 @@ services:
     ports:
       - "27038:27018"
       
+    
+    networks:
+      - mongodbnet
+      
     restart:
       always
     
@@ -96,7 +104,7 @@ services:
         soft: 300000
         hard: 300000
         
-   mongos_1:
+  mongos_1:
     image: mongo:4.0.10
     command: mongos -f /etc/mongodb/mongos.conf
     volumes: 
@@ -105,7 +113,10 @@ services:
     
     ports:
       - "27020:27020"
-      
+    
+    networks:
+      - mongodbnet
+    
     restart:
       always
     
@@ -119,5 +130,5 @@ services:
         
 # Swarm 跨主机网络网络
 networks:
-  mongodbs:
+  mongodbnet:
     external: true
