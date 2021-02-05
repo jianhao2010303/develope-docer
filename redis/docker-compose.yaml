@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   redis7001:
-    image: redis:6
+    image: redis:latest
     container_name: redis-7001
     command:
       ["redis-server", "/etc/redis/redis.conf"]
@@ -23,7 +23,7 @@ services:
         max-file: '10' 
         
   redis7002:
-    image: redis:6
+    image: redis:latest
     container_name: redis-7002
     command:
       ["redis-server", "/etc/redis/redis.conf"]
