@@ -13,7 +13,6 @@ services:
       - "7001:7001"
       - "17001:17001"
     restart: always
-    network_mode: "host"
     environment:
       # 设置时区为上海，否则时间会有问题
       - TZ=Asia/Shanghai
@@ -34,7 +33,6 @@ services:
       - "7002:7002"
       - "17002:17002"
     restart: always
-    network_mode: "host"
     environment:
       # 设置时区为上海，否则时间会有问题
       - TZ=Asia/Shanghai
